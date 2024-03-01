@@ -16,6 +16,4 @@ data class ListEntity(
 fun SuperheroItemResponse.toDatabase() = ListEntity(name = name, image = superheroImage.url)
 
 
-//fun SuperheroItemResponse.toDatabase(): ListEntity {
-    //return ListEntity(idApi = superheroId, name = name, image = superheroImage.url)
-//}
+

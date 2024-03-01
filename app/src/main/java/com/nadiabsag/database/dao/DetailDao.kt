@@ -10,19 +10,11 @@ import com.nadiabsag.database.entities.ListEntity
 
 @Dao
 interface DetailDao {
-    @Query("SELECT * FROM detail_table")
-    suspend fun getAllSuperheroDetail():List<DetailEntity>
 
-    @Query("SELECT * FROM detail_table WHERE publisher LIKE :publisher")
-    suspend fun getSuperheroDetailPublisher(publisher:String):List<DetailEntity>
 
-    @Query("SELECT * FROM detail_table WHERE `full-name` LIKE :fullName")
-    suspend fun getSuperheroDetailFullName(fullName:String):List<DetailEntity>
     @Query("SELECT id, intelligence, strength, speed, durability, power, combat, `full-name`, publisher FROM detail_table WHERE id LIKE :id")
     suspend fun getSuperhero(id: String): DetailEntity
 
-    @Query("SELECT * FROM detail_table WHERE id LIKE :id")
-    suspend fun getSuperheroDetailByID(id:Int):List<DetailEntity>
 
     @Query("SELECT image FROM list_table WHERE id LIKE :id")
     suspend fun getImage(id:Int): String

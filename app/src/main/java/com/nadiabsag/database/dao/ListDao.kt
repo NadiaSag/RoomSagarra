@@ -9,11 +9,7 @@ import com.nadiabsag.database.entities.ListEntity
 
 @Dao
 interface ListDao{
-        @Query ("SELECT * FROM list_table")
-        suspend fun getAllSuperhero():List<ListEntity>
 
-        @Query ("SELECT * FROM list_table WHERE name LIKE :query")
-        suspend fun getSuperheroesByName(query:String):List<ListEntity>
 
         @Query ("SELECT * FROM list_table WHERE name LIKE '%'|| :query || '%'")
         suspend fun getSuperheroBy(query:String):List<ListEntity>

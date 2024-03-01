@@ -33,37 +33,10 @@ class DetailSuperheroActivity : AppCompatActivity() {
         room = Room.databaseBuilder(this, SuperheroDatabase::class.java, "superheroes_sagarra").build()
 
         val id: String = intent.getStringExtra(EXTRA_ID).orEmpty()
-        //room = DatabaseProvider.getDatabase(applicationContext)
         getSuperheroInformation(id)
 
     }
 
-    /*private fun getSuperheroInformation(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val superheroDetail =
-                getRetrofit().create(ApiService::class.java).getSuperheroDetail()
-            val responseSuperheroDetail : SuperheroDetailResponse? = superheroDetail.body()
-            if (responseSuperheroDetail != null) {
-                val superheroItemDetail = responseSuperheroDetail.listDetail.map { it.toDatabase() }
-                if(room.getDetailDao().getAllSuperheroDetail().isNotEmpty()){
-                    for(s in superheroItemDetail){
-                        val superheroDetailRoom = room.getDetailDao().getSuperheroDetailByID(id)
-                        if(superheroDetailRoom[0].id==id){
-                            room.getDetailDao().update(s)
-                        }else{
-                            room.getDetailDao().insert(s)
-                        }
-                    }
-
-                } else{
-                    room.getDetailDao().insertAll(superheroItemDetail)
-                }
-                val listDetails = room.getDetailDao().getAllSuperheroDetail()
-                runOnUiThread { createUI(listDetails, id) }
-
-            }
-        }
-    }*/
 
     private fun getSuperheroInformation(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -72,14 +45,6 @@ class DetailSuperheroActivity : AppCompatActivity() {
             val superheroDetails: DetailEntity = room.getDetailDao().getSuperhero(id)
             runOnUiThread { createUI(superheroList, superheroDetails) }
         }
-    }
-
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("https://superheroapi.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
     }
 
     private fun createUI(superhero: ListEntity, superheroDetail : DetailEntity) {
@@ -116,15 +81,6 @@ class DetailSuperheroActivity : AppCompatActivity() {
     private fun pxToDp(px: Float): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, resources.displayMetrics)
             .roundToInt()
-    }
-
-    private fun formatConnections(connections: String): String {
-        val relativesArray: List<String> = connections.split("), ")
-        var relativesFormatted = ""
-        relativesArray.forEach {
-            s -> relativesFormatted = relativesFormatted.plus("• $s)\n")
-        }
-        return relativesFormatted.dropLast(2)
     }
 
 }
